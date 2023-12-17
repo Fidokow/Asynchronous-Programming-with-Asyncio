@@ -1,0 +1,33 @@
+import asyncio
+
+# Asynchronous function that simulates fetching data
+async def fetch_data(url):
+    print(f"Fetching data from {url}")
+    await asyncio.sleep(2)  # Simulating a delay (I/O operation)
+    print(f"Data fetched from {url}")
+    return f"Data from {url}"
+
+# Asynchronous function that processes fetched data
+async def process_data(data):
+    print(f"Processing data: {data}")
+    await asyncio.sleep(1)  # Simulating a delay (processing)
+    print(f"Data processed: {data.upper()}")
+    return data.upper()
+
+async def main():
+    # Create and gather two asynchronous tasks
+    task1 = asyncio.create_task(fetch_data("https://example.com/data1"))
+    task2 = asyncio.create_task(fetch_data("https://example.com/data2"))
+
+    data1 = await task1
+    data2 = await task2
+
+    processed_data1 = await process_data(data1)
+    processed_data2 = await process_data(data2)
+
+    print("Finished processing")
+    print(f"Processed Data 1: {processed_data1}")
+    print(f"Processed Data 2: {processed_data2}")
+
+# Run the event loop to execute the main coroutine
+asyncio.run(main())
