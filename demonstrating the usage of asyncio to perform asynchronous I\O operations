@@ -1,0 +1,28 @@
+import asyncio
+
+# Asynchronous function that performs I/O bound operation
+async def fetch_data(url):
+    print(f"Fetching data from {url}")
+    await asyncio.sleep(2)  # Simulating a network delay
+    print(f"Data fetched from {url}")
+    return f"Data from {url}"
+
+# Asynchronous function to process fetched data
+async def process_data(data):
+    print(f"Processing data: {data}")
+    await asyncio.sleep(1)  # Simulating processing time
+    print(f"Data processed: {data.upper()}")
+
+# Main coroutine to run the asynchronous tasks
+async def main():
+    # Fetching data asynchronously
+    data_task = asyncio.create_task(fetch_data("https://example.com"))
+
+    # Processing data asynchronously
+    processed_data_task = asyncio.create_task(process_data(await data_task))
+
+    # Wait for both tasks to complete
+    await asyncio.gather(data_task, processed_data_task)
+
+# Run the main coroutine
+asyncio.run(main())
